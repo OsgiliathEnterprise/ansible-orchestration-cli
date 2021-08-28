@@ -1,0 +1,22 @@
+---
+- name: Converge master
+  hosts:
+   - kube_master
+  tasks:
+    - name: "Include Ansible Orchestration Cli"
+      include_role:
+        name: "ansible-orchestration-cli"
+      vars:
+        secure_logs: False
+        preferred_nic: "eth1"
+        kubernetes_allow_pods_on_master: False
+        hostname: "master.osgiliath.test"
+        hostname_reboot: false
+        kube_firewall_zone: 'public'
+        docker_install_compose: false
+        company_domain: osgiliath.test
+        company_realm_password: '123ADMin'
+        reset_kube: True
+#        kube_alt_names:
+#          - "kubeadm.osgiliath.net"
+
