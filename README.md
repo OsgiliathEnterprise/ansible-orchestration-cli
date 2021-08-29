@@ -7,7 +7,9 @@ Orchestration Client
 * Chat: [![Join the chat at https://gitter.im/OsgiliathEnterprise/platform](https://badges.gitter.im/OsgiliathEnterprise/platform.svg)](https://gitter.im/OsgiliathEnterprise/platform?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 A cli for the [ansible orchestration role](https://github.com/OsgiliathEnterprise/ansible-orchestration).
-It will run some kubernetes commands (create namespaces and so on) on master nodes.
+
+* It will run some kubernetes commands (kubectl apply -f ...) on master nodes.
+* It will install helm
 
 Requirements
 ------------

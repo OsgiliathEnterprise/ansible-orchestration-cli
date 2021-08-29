@@ -7,3 +7,7 @@ collections:
   - name: community.crypto
     source: https://galaxy.ansible.com
     path: ../community-collections
+
+  - name: community.kubernetes
+    source: https://galaxy.ansible.com
+    path: ../community-collections
