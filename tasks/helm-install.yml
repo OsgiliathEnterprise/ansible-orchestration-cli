@@ -2,8 +2,19 @@
 
 - name: ansible-orchestration-cli | helm-install | configuring snap repositories
   package:
-    name: snapd
+    name: "{{ item }}"
     state: present
+  with_items:
+    - snapd
+    - kernel-modules
+  become: Yes
+
+- name: ansible-orchestration-cli | helm-install | remove unused package
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - kernel-debug-modules
   become: Yes
 
 - name: ansible-orchestration-cli | helm-install | activating snapd classic mode
