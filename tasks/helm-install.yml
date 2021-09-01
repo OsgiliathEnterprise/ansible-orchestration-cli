@@ -5,7 +5,6 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - snapd
     - kernel-modules
   become: Yes
 
@@ -15,20 +14,24 @@
     state: present
   with_items:
     - kernel-debug-modules
+    - openssl
   become: Yes
 
-- name: ansible-orchestration-cli | helm-install | activating snapd classic mode
-  ansible.builtin.file:
-    src: /var/lib/snapd/snap
-    dest: /snap
-    state: link
-  become: Yes
+- name: ansible-orchestration-cli | helm-install | create temporary folder
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: helm
+  register: helm_temp_remote_directory
 
-- name: ansible-orchestration-cli | helm-install | wait snap seed loaded
-  ansible.builtin.command: "snap wait system seed.loaded"
-  changed_when: False
-  become: Yes
+- name: ansible-orchestration-cli | helm-install | download the helm release
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+    dest: "{{ helm_temp_remote_directory.path }}/helm-installer.sh"
+    mode: '0700'
 
-- name: ansible-orchestration-cli | helm-install | install helm
-  ansible.builtin.command: "snap install helm --classic"
-  become: Yes
+- name: ansible-orchestration | helm-install | download the helm release
+  ansible.builtin.command: "{{ helm_temp_remote_directory.path }}/helm-installer.sh"
+  register: installhelmdout
+  changed_when: "'helm installed' in installhelmdout.stdout"
+  args:
+    chdir: "{{ helm_temp_remote_directory.path }}"
