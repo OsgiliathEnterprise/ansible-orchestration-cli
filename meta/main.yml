@@ -3,6 +3,7 @@ galaxy_info:
   author: OsgiliathEnterprise
   description: Wrapper role over the wonderful https://github.com/geerlingguy/ansible-role-kubernetes
   company: Osgiliath Inc.
+  namespace: tcharl
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
