@@ -1,9 +1,11 @@
 ---
 - name: ansible-orchestration-cli | include orchestration role
-  ansible.builtin.include_tasks: deps.yml
+  ansible.builtin.include_tasks: requirements.yml
   when:
    - standalone_role
    - kube_masters_group in group_names
+  tags:
+    - standalone
 
 - name: ansible-orchestration-cli | include kube master operations
   ansible.builtin.include_tasks: kube-master-tasks.yml

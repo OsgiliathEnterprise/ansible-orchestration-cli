@@ -8,5 +8,6 @@
     client_cert: "{{ kube_sysadmin_client_cert_path | default(omit) }}"
     client_key: "{{ kube_sysadmin_client_key_path | default(omit) }}"
     kubeconfig: "{{ kube_config_path }}"
+    namespace: "{{ descriptor.namespace | default('default') }}"
     context: "{{ kube_context | default('kubernetes-admin@kubernetes') }}"
   become: yes

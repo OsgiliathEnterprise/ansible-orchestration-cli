@@ -34,6 +34,9 @@ roles:
   - name: robertdebock.reboot
     source: https://galaxy.ansible.com
 
+  - name: robertdebock.environment
+    source: https://galaxy.ansible.com
+
   - name: tcharl.ansible_routing
     source: https://galaxy.ansible.com
 
