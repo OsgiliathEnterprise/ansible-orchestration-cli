@@ -1,6 +1,6 @@
 ---
 
-- name: "ansible-orchestration-cli | kube-apply | execute descriptor {{ descriptor }}"
+- name: "ansible-orchestration-cli | kube-apply | execute descriptor {{ descriptor.path }}"
   kubernetes.core.k8s:
     state: present
     src: "{{ temp_orchestration_cli_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}/{{ descriptor.path }}"

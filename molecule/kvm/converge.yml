@@ -15,7 +15,7 @@
             kind: git # local (TODO) means local to the machine executing role could also be git with a 'url' parameter set
             branch: master
             descriptors: # TODO to become Optional, should take all descriptors if no descriptor is mentionned
-              - namespaces/istio-system-ns.yml
+              - path: namespaces/istio-system-ns.yml
         secure_logs: False
         # Ansible orchestration variables
         kubernetes_allow_pods_on_master: Yes

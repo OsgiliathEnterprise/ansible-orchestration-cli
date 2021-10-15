@@ -1,37 +1,24 @@
 ---
 
-- name: ansible-orchestration-cli | helm-install | configuring snap repositories
-  package:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - kernel-modules
-  become: Yes
-
 - name: ansible-orchestration-cli | helm-install | remove unused package
   package:
     name: "{{ item }}"
     state: present
   with_items:
+    - kernel-modules
     - kernel-debug-modules
     - openssl
   become: Yes
 
-- name: ansible-orchestration-cli | helm-install | create temporary folder
-  ansible.builtin.tempfile:
-    state: directory
-    suffix: helm
-  register: helm_temp_remote_directory
-
 - name: ansible-orchestration-cli | helm-install | download the helm release
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-    dest: "{{ helm_temp_remote_directory.path }}/helm-installer.sh"
+    dest: "{{ temp_orchestration_cli_directory.path }}/helm-installer.sh"
     mode: '0700'
 
 - name: ansible-orchestration | helm-install | download the helm release
-  ansible.builtin.command: "{{ helm_temp_remote_directory.path }}/helm-installer.sh"
+  ansible.builtin.command: "{{ temp_orchestration_cli_directory.path }}/helm-installer.sh"
   register: installhelmdout
   changed_when: "'helm installed' in installhelmdout.stdout"
   args:
-    chdir: "{{ helm_temp_remote_directory.path }}"
+    chdir: "{{ temp_orchestration_cli_directory.path }}"
