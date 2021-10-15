@@ -3,7 +3,7 @@
 - name: "ansible-orchestration-cli | kube-apply | execute descriptor {{ descriptor }}"
   kubernetes.core.k8s:
     state: present
-    src: "{{ temp_orchestration_cli_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}/{{ descriptor }}"
+    src: "{{ temp_orchestration_cli_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}/{{ descriptor.url }}"
     ca_cert: "{{ kube_cacert_path | default(omit) }}"
     client_cert: "{{ kube_sysadmin_client_cert_path | default(omit) }}"
     client_key: "{{ kube_sysadmin_client_key_path | default(omit) }}"
