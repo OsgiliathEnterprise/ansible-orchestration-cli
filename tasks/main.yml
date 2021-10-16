@@ -9,5 +9,6 @@
 
 - name: ansible-orchestration-cli | include kube master operations
   ansible.builtin.include_tasks: kube-master-tasks.yml
-  when:
-   - kube_masters_group in group_names
+  when: >
+    kube_masters_group in group_names or
+    (skip_master_check is defined and skip_master_check)
