@@ -10,3 +10,4 @@
     kubeconfig: "{{ kube_config_path }}"
     namespace: "{{ descriptor.namespace | default(omit) }}"
     context: "{{ kube_context | default('kubernetes-admin@kubernetes') }}"
+  become: true
