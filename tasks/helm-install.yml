@@ -1,6 +1,6 @@
 ---
 
-- name: ansible-orchestration-cli | helm-install | remove unused package
+- name: ansible-orchestration-cli | helm-install | install helm required package
   package:
     name: "{{ item }}"
     state: present
