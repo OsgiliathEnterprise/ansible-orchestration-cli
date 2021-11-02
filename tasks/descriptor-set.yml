@@ -1,9 +1,16 @@
 ---
 
+- name: ansible-orchestration-cli | descriptor-set | Create temporary directory to checkout git
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: orchestration-cli
+  register: temp_orchestration_cli_descriptor_directory
+
 - name: "ansible-orchestration-cli | descriptor-set | checkout git for descriptorset {{ descriptor_set }}"
   ansible.builtin.git:
     repo: "{{ descriptor_set.url }}"
-    dest: "{{ temp_orchestration_cli_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}"
+    dest: "{{ temp_orchestration_cli_descriptor_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}"
+    version: "{{ descriptor_set.branch | default(omit) }}"
     update: no
 
 - name: ansible-orchestration-cli | descriptor-set | loop over configured ymls

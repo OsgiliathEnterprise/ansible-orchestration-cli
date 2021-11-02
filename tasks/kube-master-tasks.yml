@@ -5,12 +5,6 @@
     name: kubernetes
   become: Yes
 
-- name: ansible-orchestration-cli | kube-master-tasks | Create temporary directory to checkout git
-  ansible.builtin.tempfile:
-    state: directory
-    suffix: orchestration-cli
-  register: temp_orchestration_cli_directory
-
 - name: ansible-orchestration-cli | kube-master-tasks | loop over git repos to download
   ansible.builtin.include_tasks: descriptor-set.yml
   loop: "{{ descriptor_sets }}"

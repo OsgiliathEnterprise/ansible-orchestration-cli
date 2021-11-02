@@ -10,6 +10,12 @@
     - openssl
   become: Yes
 
+- name: ansible-orchestration-cli | helm-install | Create temporary directory to checkout git
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: orchestration-cli
+  register: temp_orchestration_cli_directory
+
 - name: ansible-orchestration-cli | helm-install | download the helm release
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
