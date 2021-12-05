@@ -25,7 +25,7 @@ platforms:
     interfaces:
       - auto_config: true
         network_name: private_network
-        type: dhcp
+        ip: "192.168.50.5"
     groups:
       - kube_master
       - kube_node
