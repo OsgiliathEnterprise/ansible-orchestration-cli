@@ -23,4 +23,4 @@
     company_realm_password: '123ADMin'
     reset_kube: True
   roles:
-    - role: tcharl.ansible_orchestration_cli
+    - role: ansible-orchestration-cli

@@ -1,7 +1,7 @@
 ---
 
 - name: ansible-orchestration-cli | helm-install | install helm required package
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   with_items:
