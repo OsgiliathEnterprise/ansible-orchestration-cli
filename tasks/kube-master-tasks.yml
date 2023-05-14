@@ -1,5 +1,11 @@
 ---
 
+- name: ansible-orchestration-cli | kube-master-tasks | check if should install helm
+  ansible.builtin.include_tasks: helm-install.yml
+  when:
+   - helm_install is defined
+   - helm_install
+
 - name: ansible-orchestration-cli | kube-master-tasks | install prereq
   ansible.builtin.pip:
     name: kubernetes
@@ -10,9 +16,6 @@
   loop: "{{ descriptor_sets }}"
   loop_control:
     loop_var: descriptor_set
-
-- name: ansible-orchestration-cli | kube-master-tasks | check if should install helm
-  ansible.builtin.include_tasks: helm-install.yml
   when:
-   - helm_install is defined
-   - helm_install
+   - descriptor_sets is defined
+   - descriptor_sets | length > 0

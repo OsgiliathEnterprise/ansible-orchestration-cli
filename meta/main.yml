@@ -1,7 +1,7 @@
 galaxy_info:
   role_name: ansible_orchestration_cli
   author: OsgiliathEnterprise
-  description: Wrapper role over the wonderful https://github.com/geerlingguy/ansible-role-kubernetes
+  description: Wrapper role over the wonderful https://github.com/geerlingguy/tcharl.kubernetes
   company: Osgiliath Inc.
   namespace: tcharl
 

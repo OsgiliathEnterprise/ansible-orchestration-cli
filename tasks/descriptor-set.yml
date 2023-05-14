@@ -6,12 +6,21 @@
     suffix: orchestration-cli
   register: temp_orchestration_cli_descriptor_directory
 
-- name: "ansible-orchestration-cli | descriptor-set | checkout git for descriptorset {{ descriptor_set }}"
+- name: "ansible-orchestration-cli | descriptor-set | checkout git from url for descriptorset {{ descriptor_set }}"
   ansible.builtin.git:
     repo: "{{ descriptor_set.url }}"
     dest: "{{ temp_orchestration_cli_descriptor_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}"
     version: "{{ descriptor_set.branch | default(omit) }}"
     update: no
+  when: descriptor_set.kind == 'git'
+
+- name: "ansible-orchestration-cli | descriptor-set | checkout from url for descriptorset {{ descriptor_set }}"
+  ansible.builtin.get_url:
+    url: "{{ descriptor_set.url }}/{{ descriptor_set.branch }}"
+    dest: "{{ temp_orchestration_cli_descriptor_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}"
+    mode: '0644'
+    force: true
+  when: descriptor_set.kind == 'url'
 
 - name: ansible-orchestration-cli | descriptor-set | loop over configured ymls
   ansible.builtin.include_tasks: kube-apply.yml
