@@ -1,7 +1,8 @@
 ---
 - name: Converge master
-  hosts:
-   - kube_master
+  hosts: all
+  roles:
+    - role: tcharl.ansible_orchestration_cli
   vars:
     # optional if default kube_context: system:node:master.osgiliath.test@kubernetes
     # orchestrator_client_cert_path: /home/kubecreds/kubeadm.crt
@@ -12,15 +13,3 @@
         branch: master
         descriptors: # TODO to become Optional, should take all descriptors if no descriptor is mentionned
           - path: namespaces/istio-system-ns.yml
-    secure_logs: False
-    # Ansible orchestration variables
-    kubernetes_allow_pods_on_master: Yes
-    hostname: "master.osgiliath.test"
-    hostname_reboot: false
-    kube_firewall_zone: 'public'
-    docker_install_compose: false
-    company_domain: osgiliath.test
-    company_realm_password: '123ADMin'
-    reset_kube: True
-  roles:
-    - role: tcharl.ansible_orchestration_cli

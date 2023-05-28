@@ -1,13 +1,17 @@
 ---
-- name: ansible-orchestration-cli | include orchestration role
+- name: Include orchestration role
   ansible.builtin.include_tasks: requirements.yml
   when:
    - standalone_role
-   - kube_masters_group in group_names
   tags:
     - standalone
 
-- name: ansible-orchestration-cli | include kube master operations
+- name: Import dependencies
+  ansible.builtin.import_tasks: prereq.yml
+  when:
+   - kube_masters_group in group_names
+
+- name: Include kube master operations
   ansible.builtin.include_tasks: kube-master-tasks.yml
   when: >
     kube_masters_group in group_names or

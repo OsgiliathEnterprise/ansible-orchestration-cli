@@ -1,0 +1,7 @@
+---
+kube_credential_folder: "/home/kubecreds"
+kube_sysadmin_client_cert_path: "{{ kube_credential_folder }}/kubeadm.crt"
+kube_sysadmin_client_key_path: "{{ kube_credential_folder }}/kubeadm.pem"
+kube_config_folder: "/etc/kubernetes"
+kubernetes_certificates_path: "{{ kube_config_folder }}/pki/"
+kube_cacert_path: "{{ kubernetes_certificates_path }}ca.crt"

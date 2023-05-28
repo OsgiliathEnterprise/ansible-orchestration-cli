@@ -1,28 +1,18 @@
 ---
 
-- name: ansible-orchestration-cli | helm-install | install helm required package
-  ansible.builtin.package:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - kernel-modules
-    - kernel-debug-modules
-    - openssl
-  become: Yes
-
-- name: ansible-orchestration-cli | helm-install | Create temporary directory to checkout git
+- name: Helm-install | Create temporary directory to checkout git
   ansible.builtin.tempfile:
     state: directory
     suffix: orchestration-cli
   register: temp_orchestration_cli_directory
 
-- name: ansible-orchestration-cli | helm-install | download the helm release
+- name: Helm-install | download the helm release
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
     dest: "{{ temp_orchestration_cli_directory.path }}/helm-installer.sh"
     mode: '0700'
 
-- name: ansible-orchestration | helm-install | download the helm release
+- name: Helm-install | install the helm release
   ansible.builtin.command: "{{ temp_orchestration_cli_directory.path }}/helm-installer.sh"
   register: installhelmdout
   changed_when: "'helm installed' in installhelmdout.stdout"

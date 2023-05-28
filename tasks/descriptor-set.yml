@@ -1,12 +1,12 @@
 ---
 
-- name: ansible-orchestration-cli | descriptor-set | Create temporary directory to checkout git
+- name: Descriptor-set | Create temporary directory to checkout git
   ansible.builtin.tempfile:
     state: directory
     suffix: orchestration-cli
   register: temp_orchestration_cli_descriptor_directory
 
-- name: "ansible-orchestration-cli | descriptor-set | checkout git from url for descriptorset {{ descriptor_set }}"
+- name: Descriptor-set | checkout git from url for descriptorset {{ descriptor_set }}
   ansible.builtin.git:
     repo: "{{ descriptor_set.url }}"
     dest: "{{ temp_orchestration_cli_descriptor_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}"
@@ -14,15 +14,39 @@
     update: no
   when: descriptor_set.kind == 'git'
 
-- name: "ansible-orchestration-cli | descriptor-set | checkout from url for descriptorset {{ descriptor_set }}"
+- name: Descriptor-set | checkout from url for descriptorset {{ descriptor_set }}
   ansible.builtin.get_url:
     url: "{{ descriptor_set.url }}/{{ descriptor_set.branch }}"
     dest: "{{ temp_orchestration_cli_descriptor_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}"
-    mode: '0644'
+    mode: '0640'
     force: true
   when: descriptor_set.kind == 'url'
 
-- name: ansible-orchestration-cli | descriptor-set | loop over configured ymls
+- name: Descriptor-set | checkout from targz url for descriptorset {{ descriptor_set }}
+  ansible.builtin.get_url:
+    url: "{{ descriptor_set.url }}"
+    dest: "{{ temp_orchestration_cli_descriptor_directory.path }}/tmp.tgz"
+    mode: '0640'
+    force: true
+  when: descriptor_set.kind == 'targz'
+
+- name: Descriptor-set | create target directory
+  ansible.builtin.file:
+    path: "{{ temp_orchestration_cli_descriptor_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}"
+    state: directory
+    mode: '0750'
+  when: descriptor_set.kind == 'targz'
+
+- name: Descriptor-set | untar the gz {{ descriptor_set }}
+  ansible.builtin.unarchive:
+    src: "{{ temp_orchestration_cli_descriptor_directory.path }}/tmp.tgz"
+    dest: "{{ temp_orchestration_cli_descriptor_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}"
+    remote_src: yes
+    extra_opts:
+      - --strip-components=1
+  when: descriptor_set.kind == 'targz'
+
+- name: Descriptor-set | loop over configured ymls
   ansible.builtin.include_tasks: kube-apply.yml
   loop: "{{ descriptor_set.descriptors }}"
   loop_control:

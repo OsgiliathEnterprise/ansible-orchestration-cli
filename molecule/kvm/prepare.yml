@@ -1,0 +1,16 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - include_role:
+        name: tcharl.ansible_orchestration_cli
+        tasks_from: requirements.yml
+      vars:
+        secure_logs: False
+        preferred_nic: "eth1"
+        company_domain: osgiliath.test
+        company_realm_password: '123ADMin'
+        company_ad_password: '123ADmPass'
+        standalone_role: True
+        # Ansible orchestration variables
+        kubernetes_allow_pods_on_master: True

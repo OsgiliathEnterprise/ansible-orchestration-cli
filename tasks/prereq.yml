@@ -1,0 +1,17 @@
+---
+
+- name: Prereq | linux packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - kernel-modules
+    - kernel-debug-modules
+    - openssl
+    - git
+  become: True
+
+- name: Prereq | install pip dependencies
+  ansible.builtin.pip:
+    name: kubernetes
+  become: True

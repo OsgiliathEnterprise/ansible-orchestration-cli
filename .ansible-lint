@@ -2,6 +2,7 @@ exclude_paths:
  - .cache/
  - meta/
  - molecule/
+ - .tox/
 warn_list:
  - no-changed-when
 skip_list:

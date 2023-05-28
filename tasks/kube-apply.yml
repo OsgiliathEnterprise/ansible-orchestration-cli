@@ -1,6 +1,6 @@
 ---
 
-- name: "ansible-orchestration-cli | kube-apply | execute descriptor {{ descriptor.path }}"
+- name: Kube-apply | execute descriptor {{ descriptor.path }}
   kubernetes.core.k8s:
     state: present
     src: "{{ temp_orchestration_cli_descriptor_directory.path }}/{{ descriptor_set.url | split('/') | last | split('.') | first }}/{{ descriptor.path }}"
@@ -10,4 +10,8 @@
     kubeconfig: "{{ kube_config_path }}"
     namespace: "{{ descriptor.namespace | default(omit) }}"
     context: "{{ kube_context | default('kubernetes-admin@kubernetes') }}"
+  register: res
+  until: not res.failed
+  retries: 10
+  delay: 10
   become: true
