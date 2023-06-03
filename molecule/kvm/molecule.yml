@@ -17,7 +17,7 @@ platforms:
     provider_options:
       driver: "kvm"
       cpus: 4
-      memory: 12000
+      memory: 8096
     interfaces:
       - auto_config: true
         network_name: private_network
