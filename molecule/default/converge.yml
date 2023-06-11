@@ -7,6 +7,7 @@
     # optional if default kube_context: system:node:master.osgiliath.test@kubernetes
     # orchestrator_client_cert_path: /home/kubecreds/kubeadm.crt
     # orchestrator_client_key_path: /home/kubecreds/kubeadm.pem
+    standalone_role: False
     descriptor_sets:
       - url: https://github.com/OsgiliathEnterprise/orchestrator-system-configuration.git
         kind: git # local (TODO) means local to the machine executing role could also be git with a 'url' parameter set

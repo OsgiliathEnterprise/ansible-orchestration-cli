@@ -3,6 +3,13 @@
 - name: Kube-master-tasks | check if should install helm
   ansible.builtin.include_tasks: helm-install.yml
 
+- name: Kube-master-tasks | Install Kustomize
+  ansible.builtin.shell: curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+  args:
+    chdir: /root
+    creates: /root/kustomize
+  become: True
+
 - name: Kube-master-tasks | loop over git repos to download
   ansible.builtin.include_tasks: descriptor-set.yml
   loop: "{{ descriptor_sets }}"
