@@ -1,6 +1,7 @@
 ---
 - name: Converge master
-  hosts: all
+  hosts:
+    - kube_master
   roles:
     - role: tcharl.ansible_orchestration_cli
   vars:

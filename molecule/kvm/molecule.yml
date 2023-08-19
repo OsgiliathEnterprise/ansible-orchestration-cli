@@ -4,9 +4,7 @@ dependency:
   enabled: ${DEPENDENCY_ENABLED:-True}
   options:
     role-file: ${REQUIREMENTS_PATH:-requirements-standalone.yml}
-    roles-path: ${MOLECULE_PROJECT_DIRECTORY}/../community
     requirements-file: requirements-collections.yml
-    collections-path: ${MOLECULE_PROJECT_DIRECTORY}/../community-collections
 driver:
   name: vagrant
   provider:
@@ -16,16 +14,46 @@ platforms:
     box: ${TESTBOX:-fedora/38-cloud-base}
     provider_options:
       driver: "kvm"
-      cpus: 4
-      memory: 12288
+      cpus: 2
+      memory: 3000
+      qemu_use_session: false
     interfaces:
       - auto_config: true
         network_name: private_network
-        ip: "192.168.50.4"
+        type: dhcp
+#        ip: "192.168.50.4"
     groups:
       - kube_master
-      - kube_node
+      - ipaclients
+  - name: ipa.osgiliath.test
+    box: ${TESTBOX:-fedora/38-cloud-base}
+    provider_options:
+      driver: "kvm"
+      cpus: 2
+      memory: 3000
+      qemu_use_session: false
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: dhcp
+#        ip: "192.168.50.6"
+    groups:
       - ipaservers
+  - name: node1.osgiliath.test
+    box: ${TESTBOX:-fedora/38-cloud-base}
+    provider_options:
+      driver: "kvm"
+      cpus: 2
+      memory: 3000
+      qemu_use_session: false
+    interfaces:
+      - auto_config: true
+        network_name: private_network
+        type: dhcp
+#        ip: "192.168.50.5"
+    groups:
+      - kube_node
+      - ipaclients
 provisioner:
   name: ansible
 #  config_options:

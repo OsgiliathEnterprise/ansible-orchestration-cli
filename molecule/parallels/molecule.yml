@@ -4,9 +4,7 @@ dependency:
   enabled: ${DEPENDENCY_ENABLED:-True}
   options:
     role-file: ${REQUIREMENTS_PATH:-requirements-standalone.yml}
-    roles-path: ${MOLECULE_PROJECT_DIRECTORY}/../community
     requirements-file: requirements-collections.yml
-    collections-path: ${MOLECULE_PROJECT_DIRECTORY}/../community-collections
 driver:
   name: vagrant
   provider:
@@ -15,16 +13,38 @@ platforms:
   - name: master.osgiliath.test
     box: ${TESTBOX:-bento/fedora-38-arm64}
     provider_options:
-      cpus: 4
-      memory: 4096
+      cpus: 2
+      memory: 5120
     interfaces:
       - type: dhcp
         auto_config: true
         network_name: private_network
     groups:
       - kube_master
+      - ipaclients
+  - name: ipa.osgiliath.test
+    box: ${TESTBOX:-bento/fedora-38-arm64}
+    provider_options:
+      cpus: 2
+      memory: 5120
+    interfaces:
+      - type: dhcp
+        auto_config: true
+        network_name: private_network
+    groups:
       - ipaservers
+  - name: node1.osgiliath.test
+    box: ${TESTBOX:-bento/fedora-38-arm64}
+    provider_options:
+      cpus: 2
+      memory: 5120
+    interfaces:
+      - type: dhcp
+        auto_config: true
+        network_name: private_network
+    groups:
       - kube_node
+      - ipaclients
 provisioner:
   name: ansible
 #  config_options:

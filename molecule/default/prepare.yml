@@ -1,8 +1,7 @@
 ---
 - name: Prepare
   hosts:
-    - kube_master
-    - kube_node
+    - all
   tasks:
     - include_role:
         name: tcharl.ansible_orchestration_cli
@@ -10,9 +9,15 @@
       vars:
         secure_logs: False
         preferred_nic: "eth1"
+        idm_preferred_nic: "eth1"
+        master_preferred_nic: "eth1"
+        kube_firewall_zone: 'public'
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
-        standalone_role: True
-        # Ansible orchestration variables
-        kubernetes_allow_pods_on_master: True
+        nfs_mountpoints:
+          - host: master.osgiliath.test
+            mountpoints:
+              - local: /net
+                expose_kube_volume: True
+                mountsize: 1

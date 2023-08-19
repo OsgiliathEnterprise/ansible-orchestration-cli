@@ -13,7 +13,7 @@ def test_namespace_is_created(host):
 
 def test_kustomize_installed(host):
     with host.sudo():
-        command = """ls -lrt /root | \
+        command = """ls -lrt /usr/bin | \
            grep -c 'kustomize'"""
         cmd = host.run(command)
     assert '1' in cmd.stdout
