@@ -35,7 +35,7 @@ install:
 
 script:
   - mv ../ansible-orchestration-cli ../tcharl.ansible_orchestration_cli
-  - travis_wait 50 tox -e test-exec -- --scenario-name kvm
+  - travis_wait 60 tox -e test-exec -- --scenario-name kvm
 branches:
   only:
     - master
