@@ -3,8 +3,10 @@ exclude_paths:
  - meta/
  - molecule/
  - .tox/
+ - .github/
 warn_list:
  - no-changed-when
 skip_list:
  - '106'  # Role name {} does not match ``^[a-z][a-z0-9_]+$`` pattern
  - git-latest
+ - galaxy[no-changelog]
