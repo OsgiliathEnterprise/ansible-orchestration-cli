@@ -1,9 +1,10 @@
 exclude_paths:
  - .cache/
+ - .github/
+ - .poetry/
+ - .tox/
  - meta/
  - molecule/
- - .tox/
- - .github/
 warn_list:
  - no-changed-when
 skip_list:

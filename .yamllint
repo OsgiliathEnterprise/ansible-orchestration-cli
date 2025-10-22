@@ -2,8 +2,13 @@
 # Based on ansible-lint config
 extends: default
 ignore: |
+  .ansible-lint
   .cache
+  .github
+  .poetry
+  .ansible
   .tox
+  .travis.yml
 rules:
   braces:
     max-spaces-inside: 1
@@ -17,7 +22,11 @@ rules:
   commas:
     max-spaces-after: -1
     level: error
-  comments: disable
+  comments:
+    min-spaces-from-content: 1
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true
   comments-indentation: disable
   document-start: disable
   empty-lines:
