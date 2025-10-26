@@ -1,4 +1,5 @@
 ---
+# TODO This phase fails once
 - name: Prepare IDM server
   hosts:
     - idm.osgiliath.test
@@ -17,7 +18,8 @@
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
-
+    - import_role:
+        name: tcharl.nfs_server
 - name: Prepare
   hosts:
     - master.osgiliath.test
@@ -35,13 +37,6 @@
         preferred_nic: "eth1"
         idm_preferred_nic: "eth1"
         master_preferred_nic: "eth1"
-        kube_firewall_zone: 'public'
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
-        nfs_mountpoints:
-          - host: master.osgiliath.test
-            mountpoints:
-              - local: /net
-                expose_kube_volume: True
-                mountsize: 1
