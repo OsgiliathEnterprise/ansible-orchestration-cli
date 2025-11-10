@@ -1,5 +1,0 @@
----
-
-- name: Requirements | import orchestration role
-  ansible.builtin.import_role:
-    name: tcharl.ansible_orchestration

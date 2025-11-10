@@ -5,3 +5,5 @@ kube_sysadmin_client_key_path: "{{ kube_credential_folder }}/kubeadm.pem"
 kube_config_folder: "/etc/kubernetes"
 kubernetes_certificates_path: "{{ kube_config_folder }}/pki/"
 kube_cacert_path: "{{ kubernetes_certificates_path }}ca.crt"
+
+kube_config_path: "{{ kube_config_folder }}/admin.conf"

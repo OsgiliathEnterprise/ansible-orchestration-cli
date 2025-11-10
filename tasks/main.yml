@@ -1,11 +1,4 @@
 ---
-- name: Include orchestration role
-  ansible.builtin.include_tasks: requirements.yml
-  when:
-   - standalone_role
-  tags:
-    - standalone
-
 - name: Import dependencies
   ansible.builtin.import_tasks: prereq.yml
   when:
