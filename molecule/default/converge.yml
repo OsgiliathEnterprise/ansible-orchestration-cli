@@ -9,6 +9,8 @@
     # orchestrator_client_cert_path: /home/kubecreds/kubeadm.crt
     # orchestrator_client_key_path: /home/kubecreds/kubeadm.pem
     standalone_role: False
+    skip_hostname_assert: True
+    skip_nameserver_assert: True
     descriptor_sets:
       - url: https://github.com/OsgiliathEnterprise/orchestrator-system-configuration.git
         kind: git # local (TODO) means local to the machine executing role could also be git with a 'url' parameter set

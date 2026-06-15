@@ -12,7 +12,7 @@ driver:
     name: parallels
 platforms:
   - name: idm.osgiliath.test
-    box: ${TESTBOX:-bento/fedora-42}
+    box: ${TESTBOX:-bento/fedora-43}
     provider_options:
       cpus: 2
       memory: 5120
@@ -23,7 +23,7 @@ platforms:
     groups:
       - ipaservers
   - name: master.osgiliath.test
-    box: ${TESTBOX:-bento/fedora-42}
+    box: ${TESTBOX:-bento/fedora-43}
     provider_options:
       cpus: 2
       memory: 5120
@@ -35,7 +35,7 @@ platforms:
       - kube_master
       - ipaclients
   - name: node1.osgiliath.test
-    box: ${TESTBOX:-bento/fedora-42}
+    box: ${TESTBOX:-bento/fedora-43}
     provider_options:
       cpus: 2
       memory: 5120
@@ -48,6 +48,13 @@ platforms:
       - kube_node
 provisioner:
   name: ansible
+  env:
+    ANSIBLE_COLLECTIONS_PATH: "${MOLECULE_PROJECT_DIRECTORY}/../community-collections:${HOME}/.ansible/collections:/usr/share/ansible/collections"
+  options:
+    vvv: True
+  config_options:
+    defaults:
+      remote_tmp: /tmp
 #  config_options:
 #    defaults:
 #      forks: 20
