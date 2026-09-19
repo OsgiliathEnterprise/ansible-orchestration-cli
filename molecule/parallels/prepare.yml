@@ -20,19 +20,7 @@
         idm_preferred_nic: "enp0s5"
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
-    - include_role:
-        name: tcharl.ansible_nameserver
-      vars:
-        standalone_role: False
-        secure_logs: False
-        skip_hostname_assert: True
-        skip_nameserver_assert: True
-        company_domain: osgiliath.test
-        preferred_nic: "enp0s5"
-        idm_preferred_nic: "enp0s5"
-        company_realm_password: '123ADMin'
-        company_ad_password: '123ADmPass'
-- name: Prepare IPA clients
+- name: Prepare secure the hosts
   hosts:
     - master.osgiliath.test
     - node1.osgiliath.test
@@ -46,47 +34,32 @@
       vars:
         standalone_role: False
         secure_logs: False
-        skip_hostname_assert: True
-        skip_nameserver_assert: True
         company_domain: osgiliath.test
         preferred_nic: "enp0s5"
         idm_preferred_nic: "enp0s5"
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
+- name: Prepare namesservers
+  hosts:
+    - all
+  tasks:
     - include_role:
         name: tcharl.ansible_nameserver
       vars:
         standalone_role: False
         secure_logs: False
-        skip_hostname_assert: True
-        skip_nameserver_assert: True
         company_domain: osgiliath.test
         preferred_nic: "enp0s5"
         idm_preferred_nic: "enp0s5"
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
-- name: Prepare NFS server on Master
+- name: Prepare DNS
   hosts:
     - master.osgiliath.test
-  tasks:
-    - include_role:
-        name: tcharl.nfs_server
-      vars:
-        standalone_role: False
-        secure_logs: False
-        skip_hostname_assert: True
-        skip_nameserver_assert: True
-        company_domain: osgiliath.test
-        preferred_nic: "enp0s5"
-        idm_preferred_nic: "enp0s5"
-        company_realm_password: '123ADMin'
-        company_ad_password: '123ADmPass'
-- name: Prepare NFS client on Node
-  hosts:
     - node1.osgiliath.test
   tasks:
     - include_role:
-        name: tcharl.nfs_client
+        name: tcharl.ansible_nameserver
       vars:
         standalone_role: False
         secure_logs: False
@@ -115,9 +88,25 @@
     - role: geerlingguy.swap
   become: Yes
 
-- name: Prepare Kubernetes
+- name: Prepare Kubernetes on master
   hosts:
     - master.osgiliath.test
+  tasks:
+    - include_role:
+        name: tcharl.ansible_orchestration
+      vars:
+        standalone_role: False
+        secure_logs: False
+        skip_hostname_assert: True
+        skip_nameserver_assert: True
+        company_domain: osgiliath.test
+        preferred_nic: "enp0s5"
+        idm_preferred_nic: "enp0s5"
+        master_preferred_nic: "enp0s5"
+        company_realm_password: '123ADMin'
+        company_ad_password: '123ADmPass'
+- name: Prepare Kubernetes on nodes
+  hosts:
     - node1.osgiliath.test
   tasks:
     - include_role:

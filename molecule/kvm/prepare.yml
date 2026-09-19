@@ -15,8 +15,8 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
+        preferred_nic: "ens7"
+        idm_preferred_nic: "ens7"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -27,8 +27,8 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
+        preferred_nic: "ens7"
+        idm_preferred_nic: "ens7"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -48,8 +48,8 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
+        preferred_nic: "ens7"
+        idm_preferred_nic: "ens7"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -60,40 +60,8 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
-        company_domain: osgiliath.test
-        company_realm_password: '123ADMin'
-        company_ad_password: '123ADmPass'
-- name: Prepare NFS server on Master
-  hosts:
-    - master.osgiliath.test
-  tasks:
-    - include_role:
-        name: tcharl.nfs_server
-      vars:
-        standalone_role: False
-        secure_logs: False
-        skip_hostname_assert: True # Nic name is randomized at startup
-        skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
-        company_domain: osgiliath.test
-        company_realm_password: '123ADMin'
-        company_ad_password: '123ADmPass'
-- name: Prepare NFS client on Node
-  hosts:
-    - node1.osgiliath.test
-  tasks:
-    - include_role:
-        name: tcharl.nfs_client
-      vars:
-        standalone_role: False
-        secure_logs: False
-        skip_hostname_assert: True # Nic name is randomized at startup
-        skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
+        preferred_nic: "ens7"
+        idm_preferred_nic: "ens7"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -105,7 +73,7 @@
     - role: geerlingguy.containerd
   become: Yes
 
-- name: configure kubernetes prereq # Execute master and nodes at the same time: one fact is created by the master and reused by nodes
+- name: configure swap # Execute master and nodes at the same time: one fact is created by the master and reused by nodes
   hosts:
     - master.osgiliath.test
     - node1.osgiliath.test
@@ -114,9 +82,25 @@
   roles:
     - role: geerlingguy.swap
   become: Yes
-- name: Prepare Kubernetes
+- name: Prepare Kubernetes master
   hosts:
     - master.osgiliath.test
+  tasks:
+    - include_role:
+        name: tcharl.ansible_orchestration
+      vars:
+        standalone_role: False
+        secure_logs: False
+        skip_hostname_assert: True # Nic name is randomized at startup
+        skip_nameserver_assert: True
+        preferred_nic: "ens7"
+        idm_preferred_nic: "ens7"
+        master_preferred_nic: "ens7"
+        company_domain: osgiliath.test
+        company_realm_password: '123ADMin'
+        company_ad_password: '123ADmPass'
+- name: Prepare Kubernetes nodes
+  hosts:
     - node1.osgiliath.test
   tasks:
     - include_role:
@@ -126,9 +110,9 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
-        master_preferred_nic: "ens5"
+        preferred_nic: "ens7"
+        idm_preferred_nic: "ens7"
+        master_preferred_nic: "ens7"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'

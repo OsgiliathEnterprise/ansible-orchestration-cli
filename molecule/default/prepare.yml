@@ -65,38 +65,6 @@
         idm_preferred_nic: "ens5"
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
-- name: Prepare NFS server on Master
-  hosts:
-    - master.osgiliath.test
-  tasks:
-    - include_role:
-        name: tcharl.nfs_server
-      vars:
-        standalone_role: False
-        secure_logs: False
-        skip_hostname_assert: True
-        skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        company_domain: osgiliath.test
-        idm_preferred_nic: "ens5"
-        company_realm_password: '123ADMin'
-        company_ad_password: '123ADmPass'
-- name: Prepare NFS client on Node
-  hosts:
-    - node1.osgiliath.test
-  tasks:
-    - include_role:
-        name: tcharl.nfs_client
-      vars:
-        standalone_role: False
-        secure_logs: False
-        skip_hostname_assert: True
-        skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        company_domain: osgiliath.test
-        idm_preferred_nic: "ens5"
-        company_realm_password: '123ADMin'
-        company_ad_password: '123ADmPass'
 - name: configure containerization prereq # Execute master and nodes at the same time: one fact is created by the master and reused by nodes
   hosts: # use this order: master should be created before node
     - master.osgiliath.test
@@ -114,9 +82,25 @@
   roles:
     - role: geerlingguy.swap
   become: Yes
-- name: Prepare Kubernetes
+- name: Prepare Kubernetes master
   hosts:
     - master.osgiliath.test
+  tasks:
+    - include_role:
+        name: tcharl.ansible_orchestration
+      vars:
+        standalone_role: False
+        secure_logs: False
+        skip_hostname_assert: True
+        skip_nameserver_assert: True
+        preferred_nic: "ens5"
+        company_domain: osgiliath.test
+        idm_preferred_nic: "ens5"
+        master_preferred_nic: "ens5"
+        company_realm_password: '123ADMin'
+        company_ad_password: '123ADmPass'
+- name: Prepare Kubernetes nodes
+  hosts:
     - node1.osgiliath.test
   tasks:
     - include_role:

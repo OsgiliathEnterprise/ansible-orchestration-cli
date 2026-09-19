@@ -21,6 +21,4 @@ roles:
   - name: tcharl.freeipa_server
   - name: tcharl.ansible_securehost
   - name: tcharl.ansible_nameserver
-  - name: tcharl.nfs_server
-  - name: tcharl.nfs_client
   - name: tcharl.ansible_orchestration
