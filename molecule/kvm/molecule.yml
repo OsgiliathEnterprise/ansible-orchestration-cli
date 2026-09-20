@@ -16,7 +16,7 @@ platforms:
     provider_options:
       driver: "kvm"
       cpus: 2
-      memory: 3000
+      memory: 2048
       qemu_use_session: false
     interfaces:
       - auto_config: true
@@ -31,7 +31,7 @@ platforms:
     provider_options:
       driver: "kvm"
       cpus: 2
-      memory: 3000
+      memory: 2048
       qemu_use_session: false
     interfaces:
       - auto_config: true
@@ -47,7 +47,7 @@ platforms:
     provider_options:
       driver: "kvm"
       cpus: 2
-      memory: 3000
+      memory: 2048
       qemu_use_session: false
     interfaces:
       - auto_config: true
@@ -61,14 +61,12 @@ provisioner:
   name: ansible
   env:
     ANSIBLE_COLLECTIONS_PATH: "${MOLECULE_PROJECT_DIRECTORY}/../community-collections:${HOME}/.ansible/collections:/usr/share/ansible/collections"
-    # ANSIBLE_VERBOSITY: 1
+    ANSIBLE_VERBOSITY: 2
   config_options:
     defaults:
       remote_tmp: /tmp
       forks: 20
       timeout: 60
-    privilege_escalation:
-      become_timeout: 60
     ssh_connection:
       pipelining: true
       ssh_args: -4 -o ControlMaster=auto -o ControlPersist=600s

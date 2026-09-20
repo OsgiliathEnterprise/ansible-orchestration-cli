@@ -1,6 +1,4 @@
 ---
-# TODO This phase fails once
-
 - name: Prepare IDM
   hosts:
     - idm.osgiliath.test
@@ -12,18 +10,6 @@
     - include_role:
         name: tcharl.freeipa_server
       vars:
-        secure_logs: False
-        skip_hostname_assert: True # Nic name is randomized at startup
-        skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
-        company_domain: osgiliath.test
-        company_realm_password: '123ADMin'
-        company_ad_password: '123ADmPass'
-    - include_role:
-        name: tcharl.ansible_nameserver
-      vars:
-        standalone_role: False
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
@@ -53,6 +39,10 @@
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
+- name: Prepare DNS
+  hosts:
+    - all
+  tasks:
     - include_role:
         name: tcharl.ansible_nameserver
       vars:
