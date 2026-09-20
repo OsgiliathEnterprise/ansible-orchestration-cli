@@ -15,8 +15,8 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens7"
-        idm_preferred_nic: "ens7"
+        preferred_nic: "ens5"
+        idm_preferred_nic: "ens5"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -27,8 +27,8 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens7"
-        idm_preferred_nic: "ens7"
+        preferred_nic: "ens5"
+        idm_preferred_nic: "ens5"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -48,8 +48,8 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens7"
-        idm_preferred_nic: "ens7"
+        preferred_nic: "ens5"
+        idm_preferred_nic: "ens5"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -60,8 +60,8 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens7"
-        idm_preferred_nic: "ens7"
+        preferred_nic: "ens5"
+        idm_preferred_nic: "ens5"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -93,9 +93,9 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens7"
-        idm_preferred_nic: "ens7"
-        master_preferred_nic: "ens7"
+        preferred_nic: "ens5"
+        idm_preferred_nic: "ens5"
+        master_preferred_nic: "ens5"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -110,9 +110,9 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens7"
-        idm_preferred_nic: "ens7"
-        master_preferred_nic: "ens7"
+        preferred_nic: "ens5"
+        idm_preferred_nic: "ens5"
+        master_preferred_nic: "ens5"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
