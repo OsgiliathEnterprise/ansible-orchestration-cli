@@ -1,6 +1,4 @@
 ---
-# TODO This phase fails once
-
 - name: Prepare IDM
   hosts:
     - idm.osgiliath.test
@@ -14,10 +12,10 @@
       vars:
         secure_logs: False
         skip_hostname_assert: True
-        company_domain: osgiliath.test
         skip_nameserver_assert: True
         preferred_nic: "enp0s5"
         idm_preferred_nic: "enp0s5"
+        company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
 - name: Prepare secure the hosts
@@ -53,23 +51,6 @@
         idm_preferred_nic: "enp0s5"
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
-- name: Prepare DNS
-  hosts:
-    - master.osgiliath.test
-    - node1.osgiliath.test
-  tasks:
-    - include_role:
-        name: tcharl.ansible_nameserver
-      vars:
-        standalone_role: False
-        secure_logs: False
-        skip_hostname_assert: True
-        skip_nameserver_assert: True
-        company_domain: osgiliath.test
-        preferred_nic: "enp0s5"
-        idm_preferred_nic: "enp0s5"
-        company_realm_password: '123ADMin'
-        company_ad_password: '123ADmPass'
 - name: configure containerization prereq # Execute master and nodes at the same time: one fact is created by the master and reused by nodes
   hosts: # use this order: master should be created before node
     - master.osgiliath.test
@@ -78,7 +59,7 @@
     - role: geerlingguy.containerd
   become: Yes
 
-- name: configure kubernetes prereq # Execute master and nodes at the same time: one fact is created by the master and reused by nodes
+- name: configure swap # Execute master and nodes at the same time: one fact is created by the master and reused by nodes
   hosts:
     - master.osgiliath.test
     - node1.osgiliath.test
@@ -87,8 +68,7 @@
   roles:
     - role: geerlingguy.swap
   become: Yes
-
-- name: Prepare Kubernetes on master
+- name: Prepare Kubernetes master
   hosts:
     - master.osgiliath.test
   tasks:
@@ -99,13 +79,13 @@
         secure_logs: False
         skip_hostname_assert: True
         skip_nameserver_assert: True
-        company_domain: osgiliath.test
         preferred_nic: "enp0s5"
         idm_preferred_nic: "enp0s5"
         master_preferred_nic: "enp0s5"
+        company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
-- name: Prepare Kubernetes on nodes
+- name: Prepare Kubernetes nodes
   hosts:
     - node1.osgiliath.test
   tasks:
