@@ -7,6 +7,18 @@ dependency:
     requirements-file: requirements-collections.yml
 driver:
   name: vagrant
+  # Molecule does not merge lists: override with the full option set.
+  # These become ansible_ssh_common_args in the generated inventory, which
+  # the ssh plugin appends AFTER [ssh_connection] ssh_args from the cfg.
+  ssh_connection_options:
+    - '-4'
+    - '-o UserKnownHostsFile=/dev/null'
+    - '-o ControlMaster=auto'
+    - '-o ControlPersist=1600s'
+    - '-o ForwardX11=no'
+    - '-o LogLevel=ERROR'
+    - '-o IdentitiesOnly=yes'
+    - '-o StrictHostKeyChecking=no'
   provider:
     name: virtualbox
 platforms:
@@ -61,11 +73,11 @@ provisioner:
     ANSIBLE_VERBOSITY: 2
   config_options:
     defaults:
+      timeout: 60
       remote_tmp: /tmp
       forks: 20
     ssh_connection:
       pipelining: true
-      ssh_args: -4 -o ControlMaster=auto -o ControlPersist=600s
 verifier:
   name: testinfra
   env:
