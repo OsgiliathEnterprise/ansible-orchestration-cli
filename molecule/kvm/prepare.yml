@@ -13,8 +13,8 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
+        preferred_nic: "ens7"
+        idm_preferred_nic: "ens7"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -34,8 +34,8 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
+        preferred_nic: "ens7"
+        idm_preferred_nic: "ens7"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -50,8 +50,8 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
+        preferred_nic: "ens7"
+        idm_preferred_nic: "ens7"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'
@@ -73,8 +73,7 @@
     - role: geerlingguy.swap
   become: Yes
 - name: Prepare Kubernetes master
-  hosts:
-    - master.osgiliath.test
+  hosts: kube_master,kube_node
   tasks:
     - include_role:
         name: tcharl.ansible_orchestration
@@ -83,26 +82,9 @@
         secure_logs: False
         skip_hostname_assert: True # Nic name is randomized at startup
         skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
-        master_preferred_nic: "ens5"
-        company_domain: osgiliath.test
-        company_realm_password: '123ADMin'
-        company_ad_password: '123ADmPass'
-- name: Prepare Kubernetes nodes
-  hosts:
-    - node1.osgiliath.test
-  tasks:
-    - include_role:
-        name: tcharl.ansible_orchestration
-      vars:
-        standalone_role: False
-        secure_logs: False
-        skip_hostname_assert: True # Nic name is randomized at startup
-        skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
-        master_preferred_nic: "ens5"
+        preferred_nic: "ens7"
+        idm_preferred_nic: "ens7"
+        master_preferred_nic: "ens7"
         company_domain: osgiliath.test
         company_realm_password: '123ADMin'
         company_ad_password: '123ADmPass'

@@ -8,6 +8,17 @@ dependency:
     force: true
 driver:
   name: vagrant
+  # Molecule does not merge lists: override with the full option set.
+  # These become ansible_ssh_common_args in the generated inventory, which
+  # the ssh plugin appends AFTER [ssh_connection] ssh_args from the cfg.
+  ssh_connection_options:
+    - '-o UserKnownHostsFile=/dev/null'
+    - '-o ControlMaster=auto'
+    - '-o ControlPersist=1600s'
+    - '-o ForwardX11=no'
+    - '-o LogLevel=ERROR'
+    - '-o IdentitiesOnly=yes'
+    - '-o StrictHostKeyChecking=no'
   provider:
     name: parallels
 platforms:
@@ -32,8 +43,8 @@ platforms:
         auto_config: true
         network_name: private_network
     groups:
-      - kube_master
       - ipaclients
+      - kube_master
   - name: node1.osgiliath.test
     box: ${TESTBOX:-bento/fedora-43}
     provider_options:
@@ -50,15 +61,12 @@ provisioner:
   name: ansible
   env:
     ANSIBLE_COLLECTIONS_PATH: "${MOLECULE_PROJECT_DIRECTORY}/../community-collections:${HOME}/.ansible/collections:/usr/share/ansible/collections"
-  options:
-    vvv: True
+    ANSIBLE_VERBOSITY: 1
   config_options:
     defaults:
       remote_tmp: /tmp
-      forks: 20
     ssh_connection:
       pipelining: true
-      ssh_args: -4 -o ControlMaster=auto -o ControlPersist=600s
 verifier:
   name: testinfra
   env:
