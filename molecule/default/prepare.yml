@@ -74,17 +74,16 @@
   become: Yes
 - name: Prepare Kubernetes master
   hosts: kube_master,kube_node
-  tasks:
-    - include_role:
-        name: tcharl.ansible_orchestration
-      vars:
-        standalone_role: False
-        secure_logs: False
-        skip_hostname_assert: True
-        skip_nameserver_assert: True
-        preferred_nic: "ens5"
-        idm_preferred_nic: "ens5"
-        master_preferred_nic: "ens5"
-        company_domain: osgiliath.test
-        company_realm_password: '123ADMin'
-        company_ad_password: '123ADmPass'
+  roles:
+    - role: tcharl.ansible_orchestration
+  vars:
+    standalone_role: False
+    secure_logs: False
+    skip_hostname_assert: True
+    skip_nameserver_assert: True
+    preferred_nic: "ens5"
+    idm_preferred_nic: "ens5"
+    master_preferred_nic: "ens5"
+    company_domain: osgiliath.test
+    company_realm_password: '123ADMin'
+    company_ad_password: '123ADmPass'
