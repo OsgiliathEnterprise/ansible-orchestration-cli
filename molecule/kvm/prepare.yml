@@ -76,3 +76,4 @@
     company_domain: osgiliath.test
     company_realm_password: '123ADMin'
     company_ad_password: '123ADmPass'
+    kube_firewall_zone: 'internal'
